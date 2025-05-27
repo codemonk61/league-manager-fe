@@ -12,10 +12,9 @@ import { createPlayer, deletePlayer, generateTeams, getPlayers } from "./fetch";
 function App() {
 
   const [players, setPlayers] = useState([]);
-  const [teams, setTeams] = useState([]);
 
 
-const handlePlayerCreation = async (player) => {
+const handlePlayerCreation = useCallback(async (player) => {
   try {
     const newPlayer = await createPlayer(player);
     console.log("Player created successfully:", newPlayer);
@@ -26,7 +25,7 @@ const handlePlayerCreation = async (player) => {
  
     throw error; 
   }
-}
+}, []);
 
   async function loadPlayers() {
     try {
@@ -38,7 +37,7 @@ const handlePlayerCreation = async (player) => {
     }
   }
 
-  const handlePlayerDeletion = async(id) => {
+  const handlePlayerDeletion = useCallback (async(id) => {
   try {
     const result = await deletePlayer(id); 
     console.log("Player deleted successfully:", result);
@@ -46,7 +45,7 @@ const handlePlayerCreation = async (player) => {
   } catch (error) {
     console.error("Failed to delete player:", error.message);
   }
-}
+}, [])
 
 async function handleTeamGeneration() {
   try {
@@ -76,7 +75,7 @@ async function handleTeamGeneration() {
     },
     {
       label: 'Team List',
-      content: <TeamList teams={teams} />
+      content: <TeamList/>
     },
   ];
 
