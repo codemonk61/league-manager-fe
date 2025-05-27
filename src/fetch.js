@@ -7,7 +7,9 @@
  * @throws {Error} If request fails or server returns an error
  */
 
-const API_URL = "http://localhost:5000";
+// const API_URL = "http://localhost:5000";
+const API_URL = "https://league-manager-be.onrender.com";
+
 
 export async function createPlayer({ name, level }) {
   try {
