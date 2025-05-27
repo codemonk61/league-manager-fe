@@ -15,7 +15,7 @@ function App() {
   const [teams, setTeams] = useState([]);
 
 
-const handlePlayerCreation = useCallback(async (player) => {
+const handlePlayerCreation = async (player) => {
   try {
     const newPlayer = await createPlayer(player);
     console.log("Player created successfully:", newPlayer);
@@ -26,7 +26,7 @@ const handlePlayerCreation = useCallback(async (player) => {
  
     throw error; 
   }
-}, []);
+}
 
   async function loadPlayers() {
     try {
@@ -38,7 +38,7 @@ const handlePlayerCreation = useCallback(async (player) => {
     }
   }
 
-  const handlePlayerDeletion = useCallback (async(id) => {
+  const handlePlayerDeletion = async(id) => {
   try {
     const result = await deletePlayer(id); 
     console.log("Player deleted successfully:", result);
@@ -46,7 +46,7 @@ const handlePlayerCreation = useCallback(async (player) => {
   } catch (error) {
     console.error("Failed to delete player:", error.message);
   }
-}, [])
+}
 
 async function handleTeamGeneration() {
   try {
@@ -68,9 +68,9 @@ async function handleTeamGeneration() {
         <Button
           onClick={handleTeamGeneration}
           varient="primary"
-          disabled={players.length % 2 !== 0}
+          disabled={!players.length}
         >
-          {players.length % 2 === 0 ? "Generate Teams" : "Add 1 more player"}
+       Generate Teams
         </Button>
       </>
     },
