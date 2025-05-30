@@ -30,7 +30,7 @@ const SelectPicker = ({
     onChange(null);
   };
 
-  console.log("InsideSelect>>>",value)
+
   return (
     <SelectContainer {...props}>
       {label && <Label>{label}</Label>}

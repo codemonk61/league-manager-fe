@@ -135,3 +135,71 @@ export async function getTeams() {
     throw error;
   }
 }
+
+
+export async function deleteTeam(playerId) {
+ 
+  try {
+    const response = await fetch(`${API_URL}/api/teams/${playerId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Failed to delete team");
+    }
+
+ 
+    return await response.json();
+  } catch (error) {
+    console.error("Error deleting team:", error);
+    throw error; 
+  }
+}
+
+export async function updateTeam(data) {
+  try {
+    const response = await fetch(`${API_URL}/api/teams/${data._id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Failed to create team");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error creating team:", error);
+    throw error; 
+  }
+}
+
+export async function addTeam(data) {
+  try {
+    const response = await fetch(`${API_URL}/api/teams/custom`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Failed to create team");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error creating team:", error);
+    throw error; 
+  }
+}

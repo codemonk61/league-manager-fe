@@ -6,18 +6,20 @@ const Tabs = ({ tabs, defaultActiveTab = 0, variant = 'underline', fullWidth = f
 
   return (
     <TabsContainer>
-      <TabList variant={variant} fullWidth={fullWidth}>
-        {tabs.map((tab, index) => (
-          <TabItem
-            key={index}
-            isActive={activeTab === index}
-            variant={variant}
-            onClick={() => setActiveTab(index)}
-          >
-            {tab.label}
-          </TabItem>
-        ))}
-      </TabList>
+      <TabListWrapper>
+        <TabList variant={variant} fullWidth={fullWidth}>
+          {tabs.map((tab, index) => (
+            <TabItem
+              key={index}
+              isActive={activeTab === index}
+              variant={variant}
+              onClick={() => setActiveTab(index)}
+            >
+              {tab.label}
+            </TabItem>
+          ))}
+        </TabList>
+      </TabListWrapper>
       <TabContent>
         {tabs[activeTab].content}
       </TabContent>
@@ -27,7 +29,17 @@ const Tabs = ({ tabs, defaultActiveTab = 0, variant = 'underline', fullWidth = f
 
 // Styled components
 const TabsContainer = styled.div`
-  width: 100%;
+  width: 300px;
+`;
+
+const TabListWrapper = styled.div`
+  overflow-x: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
 `;
 
 const TabList = styled.div`
@@ -35,6 +47,7 @@ const TabList = styled.div`
   border-bottom: ${({ variant }) => variant === 'underline' ? '1px solid #e2e8f0' : 'none'};
   gap: ${({ variant }) => variant === 'underline' ? '0' : '8px'};
   ${({ fullWidth }) => fullWidth && css`width: 100%;`}
+  min-width: min-content; /* Ensures flex items don't shrink below content width */
 `;
 
 const TabItem = styled.button`
@@ -46,8 +59,10 @@ const TabItem = styled.button`
   border: none;
   background: none;
   position: relative;
+  white-space: nowrap;
   transition: all 0.2s ease;
   color: ${({ isActive }) => isActive ? '#3182ce' : '#4a5568'};
+  flex-shrink: 0; /* Prevents tabs from shrinking */
 
   ${({ variant, isActive }) => {
     switch (variant) {
